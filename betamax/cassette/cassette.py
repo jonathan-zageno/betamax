@@ -129,6 +129,12 @@ class Cassette(object):
             for o in opts
         ]
 
+        for o in self.match_options:
+            try:
+                matchers.matcher_registry[o].reset()
+            except AttributeError:
+                pass  # Does not have reset function, so ignore it.
+
         for interaction in self.interactions:
             if not interaction.match(curried_matchers):
                 continue
